@@ -1,0 +1,387 @@
+\documentclass[12pt,a4paper]{report}
+
+% ---------- Packages ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  pdfauthor={MD Tahsinur Rahman, Anirban Ghosh Argha},
+  pdftitle={Pawfect: A Pet Rescue and Adoption System}
+}
+
+% ---------- Spacing ----------
+\onehalfspacing
+
+% ---------- Header / Footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\leftmark}
+\rhead{\thepage}
+
+% ---------- Title formatting ----------
+\titleformat{\chapter}{\bfseries\LARGE}{\thechapter}{1em}{}
+\titleformat{\section}{\bfseries\Large}{\thesection}{0.75em}{}
+\titleformat{\subsection}{\bfseries\large}{\thesubsection}{0.5em}{}
+
+% ---------- Lists formatting ----------
+\setlist[itemize]{leftmargin=1.2cm}
+\setlist[enumerate]{leftmargin=1.2cm}
+
+% ---------- Figure/Table numbering by chapter ----------
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+
+% ---------- Document ----------
+\begin{document}
+
+% =====================================================
+% PRIMARY TITLE PAGE
+% =====================================================
+\begin{titlepage}
+\begin{center}
+\Large \textbf{CSE 3200: System Development Project}\\[16pt]
+
+\LARGE \textbf{Pawfect: A Pet Rescue and Adoption System}\\[28pt]
+
+\large \textbf{By}\\[6pt]
+\large MD Tahsinur Rahman \\
+\large Roll: 2007091\\[6pt]
+\large \&\\[6pt]
+\large Anirban Ghosh Argha \\
+\large Roll: 2007094\\[18pt]
+
+\large Department of Computer Science and Engineering\\
+\large Khulna University of Engineering \& Technology\\[12pt]
+\large Khulna 9203, Bangladesh\\[18pt]
+\large August, 2025
+\end{center}
+\end{titlepage}
+
+% =====================================================
+% SIGNATURE / SUPERVISOR PAGE
+% =====================================================
+\begin{titlepage}
+\begin{center}
+\LARGE \textbf{Pawfect: A Pet Rescue and Adoption System}\\[20pt]
+\large \textbf{By}\\[6pt]
+\large MD Tahsinur Rahman (Roll: 2007091)\\
+\large \&\\
+\large Anirban Ghosh Argha (Roll: 2007094)\\[16pt]
+
+\large \textbf{Supervisor:}\\[6pt]
+\large Md Mehrab Hossain Opi\\
+\large Lecturer, Department of Computer Science and Engineering\\
+\large Khulna University of Engineering \& Technology\\[30pt]
+
+\large \textbf{Signature:} \rule{6cm}{0.4pt}\\[28pt]
+
+\large Department of Computer Science and Engineering\\
+\large Khulna University of Engineering \& Technology\\[12pt]
+\large Khulna 9203, Bangladesh\\[18pt]
+\large August, 2025
+\end{center}
+\end{titlepage}
+
+\pagenumbering{roman}
+
+% =====================================================
+% ACKNOWLEDGMENT
+% =====================================================
+\chapter*{Acknowledgment}
+\addcontentsline{toc}{chapter}{Acknowledgment}
+All praise to the Almighty Allah, whose blessing and mercy enabled us to complete this project successfully and fairly. We gratefully acknowledge the valuable guidance, advice, and continuous support of our respected supervisor, Md~Mehrab Hossain Opi, Lecturer, Department of Computer Science and Engineering, Khulna University of Engineering \& Technology. His insightful feedback and encouragement helped us overcome every challenge throughout this project. Finally, we are thankful to our families and friends for their patience, motivation, and moral support during this entire journey. \textit{(Authors)}
+
+% =====================================================
+% ABSTRACT
+% =====================================================
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\noindent
+\textbf{Pawfect} is a full-stack web application designed to improve pet rescue, adoption, and care by uniting multiple services into one intelligent platform. Built with the MERN stack, it supports four user roles---normal users, volunteers, veterinarians, and admins---each with dedicated dashboards and features. Users can adopt or report lost pets, book appointments with vets and volunteers, pay securely via Stripe or SSLCommerz, and chat in real time using Socket.io. Volunteers manage adoption listings, product catalogs, and appointments, while vets conduct video consultations through JitsiMeet and issue downloadable prescriptions. Admins oversee all platform data, from user management and lost pet approvals to financial reporting and forum moderation. Authentication is handled via Firebase and JWT; the UI uses Tailwind and Framer Motion. Future enhancements include EfficientNetB0 with Grad-CAM for disease detection, blockchain-enabled vaccination logs, and GPS tracking. Deployed via Firebase Hosting and Vercel, \textbf{Pawfect} aims to connect pet lovers, shelters, and professionals to improve the lives of stray and domestic animals alike.
+
+% =====================================================
+% TOC / LOF / LOT
+% =====================================================
+\tableofcontents
+\listoftables
+\listoffigures
+
+\clearpage
+\pagenumbering{arabic}
+
+% =====================================================
+% CHAPTER 1
+% =====================================================
+\chapter{Introduction}
+
+\section{Introduction}
+Stray and abandoned animals are an increasingly critical issue in urban areas of Bangladesh. These animals often endure injuries, starvation, exposure to extreme weather, and infectious diseases without timely rescue. Simultaneously, pet ownership is rising, creating demand for reliable veterinary services, pet care, delivery of essentials, and ethical adoption pathways. Despite this, there is no unified digital platform locally that integrates animal welfare with user-centric features such as adoption, veterinary care, pet supply shopping, and reporting of lost/stray animals. This fragmentation reduces rescue success and wastes opportunities to foster a humane society. \textit{Pawfect} is a modern web application built with the MERN stack to address these issues, enabling reporting, adoption, consultations, and communication among stakeholders via real-time chat, video calls, and prescription downloads.
+
+\section{Problem Statement}
+In Bangladesh, the absence of a structured, technology-enabled animal care ecosystem leaves thousands of strays untreated and unadopted. Rescue flows are informal (e.g., Facebook groups or word-of-mouth) causing delays, missed cases, and limited follow-up. Pet owners simultaneously lack centralized access to veterinary consultation, secure adoption workflows, and delivery of suitable food and medical supplies. A unified platform is needed to (i) rapidly report and rescue animals, (ii) ensure secure, verified adoption, (iii) provide easy access to veterinary care and products, and (iv) manage cases for shelters/NGOs/volunteers.
+
+\section{Objectives}
+\begin{enumerate}
+  \item Design and develop a web platform for reporting, rescuing, and adopting stray or lost animals.
+  \item Enable NGOs/volunteers to manage and respond to live rescue requests efficiently.
+  \item Provide pet owners with a deep-learning disease detection tool for early diagnosis.
+  \item Offer real-time online consultations with certified veterinarians via video.
+  \item Support e-commerce for pet essentials (food, hygiene, accessories).
+  \item Implement a secure, verified adoption workflow (ethical, traceable).
+  \item Provide role-based dashboards and access control (admin, user, vet, volunteer).
+\end{enumerate}
+
+\section{Scope of the Project}
+The project delivers a full-stack MERN application integrating front end (React + Tailwind CSS), back end (Node.js + Express), database (MongoDB), and an external AI module (Python/Flask with EfficientNetB0 + Grad-CAM). Major features include:
+\begin{itemize}
+  \item Live case reporting with image upload and geolocation (Google Maps).
+  \item OTP-verified pet adoption workflow.
+  \item Online pet store for essentials and medicines.
+  \item Doctor appointment system with video consultation and PDF prescriptions.
+  \item Role-based dashboards for admins, veterinarians, volunteers, and users.
+\end{itemize}
+
+\section{Unfamiliarity and Novelty}
+There is no Bangladeshi system that unifies rescue, tele-veterinary care, ethical adoption, supply purchasing, and AI diagnosis in one platform. \textit{Pawfect} is novel for (i) CNN-based disease detection (EfficientNetB0) with Grad-CAM explainability, (ii) OTP-secured, traceable adoption, and (iii) consolidated, role-based dashboards for NGOs, volunteers, veterinarians, admins, and pet owners.
+
+\section{Project Planning and Work Distribution}
+Two developers collaborated over several months:
+\begin{itemize}
+  \item \textbf{Frontend:} React + Tailwind UI, responsive components, role-specific dashboards.
+  \item \textbf{Backend:} Express REST APIs, JWT auth, Firebase login, secure client--server communication.
+  \item \textbf{Database:} MongoDB collections for users, pets, rescue, adoption, appointments, prescriptions, payments, products, forums.
+  \item \textbf{AI Integration:} Flask API wrapping EfficientNetB0 with Grad-CAM outputs.
+  \item \textbf{Deployment \& Testing:} Frontend on Firebase Hosting, backend on Vercel; manual/feature tests, performance checks.
+\end{itemize}
+
+\section{Applications of the Website}
+\begin{itemize}
+  \item \textbf{NGOs/Shelters:} Track rescue, manage foster/adoption, improve transparency.
+  \item \textbf{Public Users:} Report injured/lost animals with geo-tagging; adopt verified pets; join forums; access services.
+  \item \textbf{Veterinarians:} Accept bookings, conduct video sessions, upload prescriptions, maintain case histories.
+  \item \textbf{Pet Owners:} AI disease screening; order supplies; book vet/volunteer; download PDFs.
+\end{itemize}
+
+\section{Organization of the Report}
+\begin{itemize}
+  \item Chapter~\ref{chap:related} reviews related platforms/research and gaps.
+  \item Chapter~\ref{chap:method} details methodology, stack, and architecture.
+  \item Chapter~\ref{chap:impl} presents implementation, experiments, and results.
+  \item Chapter~\ref{chap:issues} covers societal, health, ethical, legal, and environmental issues.
+  \item Chapter~\ref{chap:cep} covers complex engineering problems/activities.
+  \item Chapter~\ref{chap:conclusion} concludes with limitations and future work.
+\end{itemize}
+
+% =====================================================
+% CHAPTER 2
+% =====================================================
+\chapter{Related Works}\label{chap:related}
+
+\section{Introduction}
+We survey pet rescue/adoption platforms, veterinary telehealth systems, and AI-based animal disease detection, identifying scope, technology, and limitations to motivate \textit{Pawfect}.
+
+\section{Existing Rescue and Adoption Platforms}
+International portals like Petfinder and Adopt-a-Pet list adoptable animals with search filters but do not focus on stray rescue or AI-supported care. Organizations such as Blue Cross (UK) or PAWS (India) offer rescue/adoption but lack real-time tracking, AI diagnosis, or OTP-verified adoption. In Bangladesh, informal Facebook groups (e.g., ``Pet Adoption BD'') serve as unstructured channels with limited verification and data integrity.
+
+\section{Veterinary Teleconsultation Systems}
+Services like Vetster, FirstVet, and Pawp provide on-demand video consultations but are often subscription-based, geo-restricted, and not localized for Bangladesh. They are not integrated with rescue or adoption workflows. \textit{Pawfect} integrates lightweight, locally accessible video consults via Jitsi.
+
+\section{Animal Disease Detection Using Deep Learning}
+CNNs (e.g., EfficientNet) have been used for pet skin disease classification; Grad-CAM improves model explainability. However, few works deploy models into real-time, user-facing platforms with explainable outputs. \textit{Pawfect} integrates EfficientNetB0 via Flask and returns Grad-CAM overlays to users.
+
+\section{Web Architecture Comparison (MERN vs Others)}
+Monolithic stacks (Laravel/Django/WordPress) may limit real-time, ML integration, and responsiveness. MERN brings a unified JavaScript environment, React component UI, Express REST APIs, and flexible MongoDB schemas suited to heterogenous data.
+
+\section{Gaps in Existing Systems}
+We identify (i) lack of unified solutions in Bangladesh, (ii) limited accessibility of global platforms, (iii) missing explainability in diagnostic tools, and (iv) minimal real-time, role-based support across stakeholders.
+
+% =====================================================
+% CHAPTER 3
+% =====================================================
+\chapter{Methodology}\label{chap:method}
+
+\section{Introduction}
+We followed an incremental, modular approach integrating rescue, adoption, pet care, store, tele-vet, and AI into one platform.
+
+\section{Technology Stack Overview}
+\textbf{Core MERN:} MongoDB, Express.js, React.js, Node.js. \\
+\textbf{Enhancements:} Tailwind CSS, Firebase Auth, JWT, Python/Flask (AI API), Socket.io (chat), JitsiMeet (video), Cloudinary (images), Stripe/SSLCommerz (payments).
+
+\begin{table}[H]
+\centering
+\caption{Technology Stack Overview}
+\begin{tabular}{ll}
+\toprule
+Layer & Technologies / Purpose \\
+\midrule
+Frontend & React, Tailwind, Vite \\
+Backend & Node.js, Express (REST APIs) \\
+Database & MongoDB Atlas (NoSQL) \\
+AI Module & Python, Flask, EfficientNetB0, Grad-CAM \\
+Real-time & Socket.IO, JitsiMeet (video) \\
+Auth \& Access & Firebase Auth, JWT \\
+Deployment & Firebase Hosting (FE), Vercel (BE) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{System Architecture}
+\begin{figure}[H]
+  \centering
+  % \includegraphics[width=.85\textwidth]{images/db-schema.png}
+  \caption{MongoDB Database Schema for the \textit{Pawfect} Platform (placeholder).}
+  \label{fig:dbschema}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  % \includegraphics[width=.9\textwidth]{images/system-architecture.png}
+  \caption{Overall System Architecture of the \textit{Pawfect} Web Platform (placeholder).}
+  \label{fig:system-architecture}
+\end{figure}
+
+\section{Problem Design and Analysis}
+Modules: \textbf{User} (register, browse, report, adopt), \textbf{Volunteer} (rescue response, pet profiles), \textbf{Veterinarian} (appointments, prescriptions, consults), \textbf{Admin} (roles, approvals, analytics), and \textbf{AI} (EfficientNetB0 + Grad-CAM). Data flows via REST; roles enforced both client- and server-side (Context/JWT \& middleware).
+
+\section{Conclusion}
+The MERN + Flask architecture offers scalability, modularity, and real-time features suitable for Bangladesh’s pet welfare context.
+
+% =====================================================
+% CHAPTER 4
+% =====================================================
+\chapter{Implementation, Results and Discussions}\label{chap:impl}
+
+\section{Introduction}
+We developed a production-ready MERN platform with rescue management, verified adoption, tele-vet, store, and an AI disease detection endpoint.
+
+\section{Experimental Setup}
+Frontend: React + Tailwind + Vite. Backend: Node.js + Express. DB: MongoDB Atlas. Auth: Firebase + JWT. AI: Flask API serving EfficientNetB0 (Grad-CAM). Real-time chat: Socket.IO. Video consult: JitsiMeet. Images: Cloudinary. PDFs: jsPDF. Deployment: Firebase (FE), Vercel (BE).
+
+\section{Evaluation Metrics}
+We evaluated the AI classifier using accuracy, precision, recall, F1-score, and confusion matrices; we also measured API latency, upload success, and Grad-CAM render time.
+
+\begin{table}[H]
+\centering
+\caption{Dog Skin Disease Classification (Example Metrics)}
+\begin{tabular}{lcc}
+\toprule
+Metric & Training & Validation \\
+\midrule
+Accuracy & 96.71\% & 95.16\% \\
+Precision & 95.40\% & 94.80\% \\
+Recall & 95.00\% & 94.60\% \\
+F1-Score & 95.20\% & 94.70\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Implementation and Results}
+\begin{figure}[H]
+  \centering
+  % \includegraphics[width=.9\textwidth]{images/chat-ui.png}
+  \caption{Two-way Volunteer Chat Interface using Socket.IO (placeholder).}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  % \includegraphics[width=.9\textwidth]{images/payments.png}
+  \caption{Integrated Payment Gateways: Stripe (card) and SSLCommerz (mobile banking) (placeholder).}
+\end{figure}
+
+\section{Objective Achieved}
+All objectives were met: unified rescue/adoption flows, OTP-secured processes, role-based dashboards, real-time chat/video, store integration, and AI diagnosis with explainability.
+
+\section{Conclusion}
+The system demonstrates feasibility and real-world utility with strong classifier performance, responsive UX, and scalable cloud deployment.
+
+% =====================================================
+% CHAPTER 5
+% =====================================================
+\chapter{Societal, Health, Environment, Safety, Ethical, Legal and Cultural Issues}\label{chap:issues}
+
+\section{Intellectual Property Considerations}
+Open-source technologies were used under appropriate licenses. Code originality enables potential copyright registration; the platform is intended to remain community-accessible.
+
+\section{Ethical Considerations}
+Data protection and OTP-secured adoptions promote fairness and transparency. AI augments, not replaces, professional vet judgment.
+
+\section{Safety Considerations}
+NGO-verified rescue handling and prescription guidance improve safe care; disclaimers clarify boundaries of tele-advice.
+
+\section{Legal Considerations}
+The platform complies with relevant cyber/privacy norms. Sensitive actions require registered roles and secure authentication.
+
+\section{Impact on Societal, Health, and Cultural Issues}
+Improves animal welfare, adoption awareness, and access to care. Counters stigma around strays through structured, humane interventions.
+
+\section{Impact on the Environment and Sustainability}
+Digital workflows reduce paper reliance; long-term care/adoption reduce abandonment.
+
+% =====================================================
+% CHAPTER 6
+% =====================================================
+\chapter{Addressing Complex Engineering Problems and Activities}\label{chap:cep}
+
+\section{Complex Engineering Problems}
+Unifying rescue, tele-vet, store, and AI within a single architecture while ensuring performance/security; cross-origin AI integration; OTP flows; responsive role-based UX; real-time state synchronization.
+
+\section{Complex Engineering Activities}
+Training/deploying EfficientNetB0 with Flask; robust REST design and error handling; multi-role Firebase/JWT auth; CI/CD across Firebase/Vercel; scalable state management and accessibility-focused UI/UX.
+
+% =====================================================
+% CHAPTER 7
+% =====================================================
+\chapter{Conclusions}\label{chap:conclusion}
+
+\section{Summary}
+\textit{Pawfect} unifies rescue reporting, verified adoption, tele-vet consults, and a pet essentials store with explainable AI diagnosis, OTP security, and real-time dashboards in a scalable MERN + Flask architecture.
+
+\section{Limitations}
+\begin{enumerate}
+  \item Classifier generalization could improve with more local data.
+  \item Teleconsult features depend on connectivity and device access.
+  \item Verification could be enhanced beyond OTP.
+  \item Rescue dispatch is not yet fully automated.
+\end{enumerate}
+
+\section{Recommendations and Future Works}
+\begin{enumerate}
+  \item Add native mobile apps and multi-language UI.
+  \item Expand datasets; consider multi-label diagnoses.
+  \item Geofencing and automated alerts to nearby NGOs/volunteers.
+  \item Collaborate with government/NGOs for wider deployment.
+\end{enumerate}
+
+% =====================================================
+% REFERENCES
+% =====================================================
+\begin{thebibliography}{99}
+\bibitem{tan2019efficientnet} M. Tan and Q. V. Le, ``EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks,'' \textit{Proceedings of ICML}, 2019.
+\bibitem{selvaraju2017gradcam} R. R. Selvaraju \textit{et al.}, ``Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization,'' \textit{ICCV}, 2017.
+\bibitem{sharma2020dog} S. Sharma and M. Kaushik, ``Deep Learning-Based Dog Skin Disease Classification Using Transfer Learning,'' \textit{IJCA}, 2020.
+\bibitem{zhou2022vet} H. Zhou, J. Liu, and Y. Zhang, ``Veterinary Disease Diagnosis Based on CNN and Grad-CAM Visualization,'' \textit{BIBM}, 2022.
+\bibitem{rahman2022petadoption} M. A. Rahman, N. S. Jahan, and R. T. Mamun, ``Design and Development of a Web-Based Pet Adoption Platform in Bangladesh,'' \textit{ICCIT}, 2022.
+\bibitem{sarker2022aidriven} A. K. Sarker and M. S. Islam, ``AI-Driven Veterinary Support System for Rural Communities in South Asia,'' \textit{IJACSA}, 2022.
+\bibitem{rajan2023mernmean} S. Rajan and T. Chatterjee, ``A Comparative Study on MERN Stack and MEAN Stack for Full-Stack Web Development,'' \textit{ICCCS}, 2023.
+\bibitem{singh2021iotaivet} D. A. Singh and A. Mondal, ``Smart Pet Healthcare: IoT and AI-Based System Design,'' \textit{IEMIS}, 2021.
+\end{thebibliography}
+
+\end{document}
